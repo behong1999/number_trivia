@@ -23,7 +23,15 @@ class NumberInputState extends State<NumberInput> {
             hintText: 'Type a number',
           ),
           onChanged: (value) => inputStr = value,
-          onSubmitted: (_) => callConcrete(),
+          onSubmitted: (_) {
+            if (inputStr == null) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(const SnackBar(content: Text('Empty !')));
+            } else {
+              callConcrete();
+            }
+          },
         ),
         const SizedBox(height: 10),
         Row(children: [
@@ -32,7 +40,15 @@ class NumberInputState extends State<NumberInput> {
             textColor: Colors.white,
             child: const Text('Search'),
             color: Theme.of(context).accentColor,
-            onPressed: callConcrete,
+            onPressed: () {
+              if (inputStr == null) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(const SnackBar(content: Text('Empty !')));
+              } else {
+                callConcrete();
+              }
+            },
           )),
           const SizedBox(
             width: 20,

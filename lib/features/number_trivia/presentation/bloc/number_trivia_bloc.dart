@@ -35,17 +35,17 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         getRandomNumberTrivia = random,
         inputConverter = converter,
         super(Empty()) {
-    // ignore: void_checks
     on<GetTriviaForConcreteNumber>((event, emit) async {
       emit(Loading());
       final inputEither =
           inputConverter.stringToUnsignedInteger(event.numberString);
-
-      inputEither.fold(
+      print(inputEither);
+      await inputEither.fold(
         (failure) {
           emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
         },
         (integer) async {
+          //NOTE: Error starts from here
           //* Turns Future<Either<Failure, NumTrivia>> into Either<Failure, NumTrivia>
           final failureOrTrivia =
               await getConcreteNumberTrivia(Params(integer));
